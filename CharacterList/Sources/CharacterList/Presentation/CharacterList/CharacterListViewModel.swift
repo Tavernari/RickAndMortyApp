@@ -27,8 +27,8 @@ class CharacterListViewModel {
 
     private var favorited = Set<Int>()
 
-    private let fetchCaractersUseCase: FetchCaractersUseCase
-    init(fetchCaractersUseCase: FetchCaractersUseCase) {
+    private let fetchCaractersUseCase: FetchCharactersUseCase
+    init(fetchCaractersUseCase: FetchCharactersUseCase) {
         self.fetchCaractersUseCase = fetchCaractersUseCase
     }
 

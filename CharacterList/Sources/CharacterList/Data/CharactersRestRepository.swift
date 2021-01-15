@@ -1,5 +1,5 @@
 //
-//  FetchCaractersUseCase.swift
+//  CharactersRestRepository.swift
 //  
 //
 //  Created by Victor C Tavernari on 15/01/21.
@@ -7,10 +7,10 @@
 
 import Combine
 
-class FetchCaractersUseCase {
-    func run() -> Future<[Character], Error> {
-        return Future<[Character], Error> { future in
-            future(.success([
+class CharactersRestRepository: CharactersRepository {
+    func fetch(page: Int) -> Future<[Character], Error> {
+        return Future<[Character], Error> { promise in
+            promise(.success([
                 .init(id: 1,
                           name: "Bobby Moynihan",
                           avatar: "https://rickandmortyapi.com/api/character/avatar/54.jpeg"),
@@ -35,7 +35,7 @@ class FetchCaractersUseCase {
                 .init(id: 8,
                           name: "Valderez Tavares",
                           avatar: "https://rickandmortyapi.com/api/character/avatar/12.jpeg")
-                
+
             ]))
         }
     }

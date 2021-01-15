@@ -10,7 +10,7 @@ import UIComponents
 
 class CharacterListViewController: UIViewController {
     lazy var collectionView = UITableView()
-    lazy var viewModel = CharacterListViewModel(fetchCaractersUseCase: .init())
+    lazy var viewModel = CharacterListViewModel(fetchCaractersUseCase: .init(repository: CharactersRestRepository()))
     lazy var dataSource = TableViewDataSource.make(for: [], withViewModel: viewModel)
 
     override func viewDidLoad() {

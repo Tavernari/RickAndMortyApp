@@ -9,19 +9,9 @@ import UIKit
 import UIComponents
 
 class CharacterListViewController: UIViewController {
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: verticalFlowLayout)
-    lazy var viewModel = CharacterListViewModel()
-    lazy var dataSource = TableViewDataSource.make(for: [])
-
-    lazy var verticalFlowLayout: UICollectionViewFlowLayout = {
-        let flow = UICollectionViewFlowLayout()
-        flow.scrollDirection = .vertical
-        flow.estimatedItemSize = .init(width: 300, height: 300)
-        flow.footerReferenceSize = .init(width: 0, height: 40)
-        flow.headerReferenceSize = .init(width: 0, height: 10)
-        flow.minimumLineSpacing = 40
-        return flow
-    }()
+    lazy var collectionView = UITableView()
+    lazy var viewModel = CharacterListViewModel(fetchCaractersUseCase: .init())
+    lazy var dataSource = TableViewDataSource.make(for: [], withViewModel: viewModel)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +20,20 @@ class CharacterListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         collectionView.register(CharacterListCell.self,
-                                forCellWithReuseIdentifier: CharacterListCell.reuseIdentifier)
+                                forCellReuseIdentifier: CharacterListCell.reuseIdentifier)
+        collectionView.separatorStyle = .none
+        collectionView.rowHeight = UITableView.automaticDimension
+        collectionView.estimatedRowHeight = 400
+        collectionView.delegate = self
+        collectionView.bounces = true
+        collectionView.bouncesZoom = true
+
+        collectionView.dataSource = self.dataSource
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.allowsMultipleSelection = false
         collectionView.allowsSelection = false
+        
         view.addSubview(collectionView)
         collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
@@ -48,22 +47,20 @@ class CharacterListViewController: UIViewController {
             case .failed:
                 break
             case .done:
-                self.dataSource = .make(for: self.viewModel.items)
-                self.collectionView.dataSource = self.dataSource
+                self.dataSource.models = self.viewModel.items
                 self.collectionView.reloadData()
             }
         }
 
         viewModel.fetchCharacters()
 
-        view.backgroundColor = .white
-        collectionView.backgroundColor = .white
     }
+}
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        viewModel.fetchCharacters()
-
+extension CharacterListViewController: UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+            viewModel.fetchCharacters()
+        }
     }
 }

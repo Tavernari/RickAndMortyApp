@@ -16,24 +16,45 @@ class CharacterListViewModel {
     }
 
     struct ViewData {
-        let id: Int
         let name: String
         let imagePath: String
     }
 
     var items: [ViewData] = []
+    private var characters: [Character] = []
 
     var onUpdated: ((State)->Void)?
 
-    init() {
+    private var favorited = Set<Int>()
 
+    private let fetchCaractersUseCase: FetchCaractersUseCase
+    init(fetchCaractersUseCase: FetchCaractersUseCase) {
+        self.fetchCaractersUseCase = fetchCaractersUseCase
     }
 
     func fetchCharacters() {
         onUpdated?(.loading)
-        items.append(.init(id: 1,
-                           name: "Bobby Moynihan",
-                           imagePath: "https://rickandmortyapi.com/api/character/avatar/54.jpeg"))
-        onUpdated?(.done)
+        fetchCaractersUseCase.run().sink { error in
+        } receiveValue: { characters in
+            self.characters.append(contentsOf: characters)
+            self.items.append(contentsOf: characters.map { ViewData(name: $0.name, imagePath: $0.avatar) })
+            self.onUpdated?(.done)
+        }
+
+    }
+
+    func favorite(index: Int) {
+        let id = characters[index].id
+        favorited.insert(id)
+    }
+
+    func unfavorite(index: Int) {
+        let id = characters[index].id
+        favorited.remove(id)
+    }
+
+    func wasFavorited(index: Int) -> Bool {
+        let id = characters[index].id
+        return favorited.contains(id)
     }
 }

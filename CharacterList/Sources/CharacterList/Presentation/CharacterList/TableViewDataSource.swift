@@ -7,8 +7,8 @@
 
 import UIKit
 
-class TableViewDataSource<Model, Cell: UICollectionViewCell>: NSObject, UICollectionViewDataSource {
-    typealias CellConfigurator = (Model, Cell) -> Void
+class TableViewDataSource<Model, Cell: UITableViewCell>: NSObject, UITableViewDataSource {
+    typealias CellConfigurator = (Model, Cell, IndexPath) -> Void
 
     var models: [Model]
 
@@ -23,14 +23,14 @@ class TableViewDataSource<Model, Cell: UICollectionViewCell>: NSObject, UICollec
         self.cellConfigurator = cellConfigurator
     }
 
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return models.count
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let model = models[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: reuseIdentifier,
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: reuseIdentifier,
             for: indexPath
         )
 
@@ -38,7 +38,7 @@ class TableViewDataSource<Model, Cell: UICollectionViewCell>: NSObject, UICollec
             return cell
         }
 
-        cellConfigurator(model, genericCell)
+        cellConfigurator(model, genericCell, indexPath)
 
         return genericCell
     }

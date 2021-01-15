@@ -8,7 +8,7 @@
 import UIKit
 import UIComponents
 
-class CharacterListCell: UICollectionViewCell {
+class CharacterListCell: UITableViewCell {
     static let reuseIdentifier = "CharacterListCell"
     override var reuseIdentifier: String? { CharacterListCell.reuseIdentifier }
 
@@ -29,13 +29,32 @@ class CharacterListCell: UICollectionViewCell {
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
 
-        characterTitleAvatarView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        characterTitleAvatarView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        characterTitleAvatarView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        characterTitleAvatarView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        characterTitleAvatarView.setContentCompressionResistancePriority(.init(1000), for: .vertical)
+
+        characterTitleAvatarView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        characterTitleAvatarView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
+        characterTitleAvatarView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+        characterTitleAvatarView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
+        characterTitleAvatarView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+
+        characterTitleAvatarView.updateConstraints()
     }
 
     func render(name: String, avatarImage: String) {
         characterTitleAvatarView.render(name: name, avatarImage: avatarImage)
+    }
+
+    var isFavorite: Bool {
+        get {  characterTitleAvatarView.isFavorited }
+        set { characterTitleAvatarView.isFavorited = newValue }
+    }
+
+    var onFavoriteTouched: (()->Void)? {
+        get { characterTitleAvatarView.onFavoriteTouched }
+        set { characterTitleAvatarView.onFavoriteTouched = newValue }
+    }
+
+    func clear() {
+        characterTitleAvatarView.clear()
     }
 }

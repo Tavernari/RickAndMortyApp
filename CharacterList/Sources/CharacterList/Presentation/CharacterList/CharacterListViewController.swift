@@ -9,9 +9,59 @@ import UIKit
 import UIComponents
 
 class CharacterListViewController: UIViewController {
-    lazy var collectionView = UITableView()
+    lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.register(CharacterListCell.self,
+                                forCellReuseIdentifier: CharacterListCell.reuseIdentifier)
+        tableView.separatorStyle = .none
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 400
+        tableView.delegate = self
+        tableView.bounces = true
+        tableView.bouncesZoom = true
+
+        tableView.dataSource = self.dataSource
+
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsMultipleSelection = false
+        tableView.allowsSelection = false
+        return tableView
+    }()
+
+    lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.color = .systemPurple
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.alpha = 0
+        let blurEffect = UIBlurEffect(style: .systemMaterial)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        activityIndicator.insertSubview(blurEffectView, at: 0)
+        return activityIndicator
+    }()
+
     lazy var viewModel = CharacterListViewModel(fetchCaractersUseCase: .init(repository: CharactersRestRepository()))
     lazy var dataSource = TableViewDataSource.make(for: [], withViewModel: viewModel)
+
+    private func showLoadingView() {
+        activityIndicatorView.layer.removeAllAnimations()
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+            self.activityIndicatorView.alpha = 1
+        } completion: { _ in
+            self.activityIndicatorView.startAnimating()
+        }
+    }
+
+    private func hideLoadingView() {
+        activityIndicatorView.layer.removeAllAnimations()
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+            self.activityIndicatorView.alpha = 0
+        } completion: { _ in
+            self.activityIndicatorView.stopAnimating()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,36 +69,29 @@ class CharacterListViewController: UIViewController {
         title = "Characters"
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        collectionView.register(CharacterListCell.self,
-                                forCellReuseIdentifier: CharacterListCell.reuseIdentifier)
-        collectionView.separatorStyle = .none
-        collectionView.rowHeight = UITableView.automaticDimension
-        collectionView.estimatedRowHeight = 400
-        collectionView.delegate = self
-        collectionView.bounces = true
-        collectionView.bouncesZoom = true
+        view.addSubview(tableView)
+        view.addSubview(activityIndicatorView)
 
-        collectionView.dataSource = self.dataSource
+        activityIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        activityIndicatorView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        activityIndicatorView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalToConstant: 80).isActive = true
 
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.allowsMultipleSelection = false
-        collectionView.allowsSelection = false
-        
-        view.addSubview(collectionView)
-        collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
         viewModel.onUpdated = { state in
             switch state {
             case .loading:
-                break
+                self.showLoadingView()
             case .failed:
-                break
+                self.hideLoadingView()
             case .done:
+                self.hideLoadingView()
                 self.dataSource.models = self.viewModel.items
-                self.collectionView.reloadData()
+                self.tableView.reloadData()
             }
         }
 
@@ -59,7 +102,7 @@ class CharacterListViewController: UIViewController {
 
 extension CharacterListViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height - 300) {
+        if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
             viewModel.fetchCharacters()
         }
     }

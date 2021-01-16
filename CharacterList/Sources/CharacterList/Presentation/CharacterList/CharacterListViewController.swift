@@ -82,7 +82,8 @@ class CharacterListViewController: UIViewController {
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
-        viewModel.onUpdated = { state in
+        viewModel.onUpdated = { [weak self] state in
+            guard let self = self else { return }
             switch state {
             case .loading:
                 self.showLoadingView()

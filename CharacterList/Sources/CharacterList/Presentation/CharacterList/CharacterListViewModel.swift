@@ -13,7 +13,7 @@ class CharacterListViewModel {
     enum State {
         case loading
         case done
-        case failed(errorMessage: String)
+        case failed
     }
 
     struct ViewData {
@@ -39,13 +39,17 @@ class CharacterListViewModel {
         onUpdated?(.loading)
         fetchCharactersCancelable = fetchCaractersUseCase.run()
             .receive(on: DispatchQueue.main)
-            .sink { error in
+            .sink { completion in
+                self.fetchCharactersCancelable = nil
+                switch completion {
+                case .failure:
+                    self.onUpdated?(.failed)
+                default: break
+                }
         } receiveValue: { characters in
             self.characters.append(contentsOf: characters)
             self.items.append(contentsOf: characters.map { ViewData(name: $0.name, imagePath: $0.avatar) })
             self.onUpdated?(.done)
-            self.fetchCharactersCancelable?.cancel()
-            self.fetchCharactersCancelable = nil
         }
 
     }

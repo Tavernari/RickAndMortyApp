@@ -47,7 +47,7 @@ class CharacterListViewController: UIViewController {
 
     private func showLoadingView() {
         activityIndicatorView.layer.removeAllAnimations()
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseIn) {
             self.activityIndicatorView.alpha = 1
         } completion: { _ in
             self.activityIndicatorView.startAnimating()
@@ -56,11 +56,19 @@ class CharacterListViewController: UIViewController {
 
     private func hideLoadingView() {
         activityIndicatorView.layer.removeAllAnimations()
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
             self.activityIndicatorView.alpha = 0
         } completion: { _ in
             self.activityIndicatorView.stopAnimating()
         }
+    }
+
+    private func showErrorAlert() {
+        let alert = UIAlertController(title: "Something wrong", message: "Check your internet connection, or try again later!", preferredStyle: .alert)
+        alert.addAction(.init(title: "Retry", style: .default, handler: { action in
+            alert.dismiss(animated: true, completion: self.viewModel.fetchCharacters)
+        }))
+        self.present(alert, animated: true)
     }
 
     override func viewDidLoad() {
@@ -89,6 +97,7 @@ class CharacterListViewController: UIViewController {
                 self.showLoadingView()
             case .failed:
                 self.hideLoadingView()
+                self.showErrorAlert()
             case .done:
                 self.hideLoadingView()
                 self.dataSource.models = self.viewModel.items
@@ -97,7 +106,6 @@ class CharacterListViewController: UIViewController {
         }
 
         viewModel.fetchCharacters()
-
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class CharacterListViewModel {
 
@@ -25,6 +26,7 @@ class CharacterListViewModel {
 
     var onUpdated: ((State)->Void)?
 
+    private var fetchCharactersCancelable: AnyCancellable?
     private var favorited = Set<Int>()
 
     private let fetchCaractersUseCase: FetchCharactersUseCase
@@ -33,12 +35,17 @@ class CharacterListViewModel {
     }
 
     func fetchCharacters() {
+        guard fetchCharactersCancelable == nil else { return }
         onUpdated?(.loading)
-        fetchCaractersUseCase.run().sink { error in
+        fetchCharactersCancelable = fetchCaractersUseCase.run()
+            .receive(on: DispatchQueue.main)
+            .sink { error in
         } receiveValue: { characters in
             self.characters.append(contentsOf: characters)
             self.items.append(contentsOf: characters.map { ViewData(name: $0.name, imagePath: $0.avatar) })
             self.onUpdated?(.done)
+            self.fetchCharactersCancelable?.cancel()
+            self.fetchCharactersCancelable = nil
         }
 
     }

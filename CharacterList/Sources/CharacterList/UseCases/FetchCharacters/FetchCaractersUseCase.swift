@@ -13,7 +13,8 @@ protocol CharactersRepository {
 
 class FetchCharactersUseCase {
 
-    private var currentPage = 0
+    var currentPage = -1
+    var isLoading = false
     private let repository: CharactersRepository
     init(repository: CharactersRepository) {
         self.repository = repository

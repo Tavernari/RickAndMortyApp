@@ -59,7 +59,7 @@ class CharacterListViewController: UIViewController {
 
 extension CharacterListViewController: UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+        if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height - 300) {
             viewModel.fetchCharacters()
         }
     }

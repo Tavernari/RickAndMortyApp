@@ -42,7 +42,7 @@ class CharacterListViewController: UIViewController {
         return activityIndicator
     }()
 
-    lazy var viewModel = CharacterListViewModel(fetchCaractersUseCase: .init(repository: CharactersRestRepository()))
+    var viewModel: CharacterListViewModel!
     lazy var dataSource = TableViewDataSource.make(for: [], withViewModel: viewModel)
 
     private func showLoadingView() {

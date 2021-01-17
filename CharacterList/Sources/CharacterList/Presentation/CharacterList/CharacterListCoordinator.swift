@@ -17,6 +17,9 @@ public class CharacterListCoordinator: Coordinator {
 
     public func start() {
         let vc = CharacterListViewController()
+        let repository = CharactersRestRepository()
+        let useCase = FetchCharactersUseCase(repository: repository)
+        vc.viewModel = CharacterListViewModel(fetchCaractersUseCase: useCase)
         self.navigationController.viewControllers = [vc]
     }
 }

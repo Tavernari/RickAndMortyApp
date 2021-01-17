@@ -26,6 +26,7 @@ class CharacterListViewModel {
 
     var onUpdated: ((State)->Void)?
 
+    private var isAllCharactersLoaded = false
     private var fetchCharactersCancelable: AnyCancellable?
     private var favorited = Set<Int>()
 
@@ -35,14 +36,20 @@ class CharacterListViewModel {
     }
 
     func fetchCharacters() {
-        guard fetchCharactersCancelable == nil else { return }
+        guard !isAllCharactersLoaded && fetchCharactersCancelable == nil else { return }
         onUpdated?(.loading)
         fetchCharactersCancelable = fetchCaractersUseCase.run()
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 self.fetchCharactersCancelable = nil
                 switch completion {
-                case .failure:
+                case .failure(let error):
+                    guard error == .somethingWrong else {
+                        self.isAllCharactersLoaded = true
+                        self.onUpdated?(.done)
+                        return
+                    }
+
                     self.onUpdated?(.failed)
                 default: break
                 }

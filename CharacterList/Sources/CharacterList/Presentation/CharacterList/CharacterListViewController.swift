@@ -29,14 +29,14 @@ class CharacterListViewController: UIViewController {
     }()
 
     lazy var activityIndicatorView: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(style: .large)
+        let activityIndicator = UIActivityIndicatorView(style: .medium)
         activityIndicator.color = .systemPurple
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
         activityIndicator.alpha = 0
         let blurEffect = UIBlurEffect(style: .systemMaterial)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-        blurEffectView.frame = view.bounds
+        blurEffectView.frame = activityIndicator.bounds
         blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         activityIndicator.insertSubview(blurEffectView, at: 0)
         return activityIndicator
@@ -83,7 +83,7 @@ class CharacterListViewController: UIViewController {
         activityIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         activityIndicatorView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
         activityIndicatorView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        activityIndicatorView.heightAnchor.constraint(equalToConstant: 80).isActive = true
+        activityIndicatorView.heightAnchor.constraint(equalToConstant: 50).isActive = true
 
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true

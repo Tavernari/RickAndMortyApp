@@ -10,12 +10,16 @@ import RickAndMortyRestAPI
 
 class CharactersRestRepository: CharactersRepository {
     private var allCharactersCancelable: AnyCancellable?
-    func fetch(page: Int) -> Future<[CharacterList.Character], Error> {
-        return Future<[CharacterList.Character], Error> { promise in
+    func fetch(page: Int) -> Future<[CharacterList.Character], CharacterListError> {
+        return Future<[CharacterList.Character], CharacterListError> { promise in
             self.allCharactersCancelable = RickAndMortyRestAPI.allCharacters(page: page).sink { completion in
                 switch completion {
                 case .failure(let error):
-                    promise(.failure(error))
+                    if let apiError = error as? RickAndMortyRestAPIError, apiError == RickAndMortyRestAPIError.invalidData {
+                        promise(.failure(CharacterListError.nothingToShow))
+                    } else {
+                        promise(.failure(CharacterListError.somethingWrong))
+                    }
                 default: break
                 }
             } receiveValue: { fetchResponse in

@@ -8,7 +8,7 @@
 import Combine
 
 protocol CharactersRepository {
-    func fetch(page: Int) -> Future<[Character], Error>
+    func fetch(page: Int) -> Future<[Character], CharacterListError>
 }
 
 class FetchCharactersUseCase {
@@ -20,7 +20,7 @@ class FetchCharactersUseCase {
         self.repository = repository
     }
 
-    func run() -> Future<[Character], Error> {
+    func run() -> Future<[Character], CharacterListError> {
         currentPage += 1
         return self.repository.fetch(page: currentPage)
     }

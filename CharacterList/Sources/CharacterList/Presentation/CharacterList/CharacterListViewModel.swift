@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Shared
 
 class CharacterListViewModel {
 
@@ -14,6 +15,7 @@ class CharacterListViewModel {
         case loading
         case done
         case failed
+        case selected(characterId: Int)
     }
 
     struct ViewData {
@@ -74,5 +76,10 @@ class CharacterListViewModel {
     func wasFavorited(index: Int) -> Bool {
         let id = characters[index].id
         return favorited.contains(id)
+    }
+
+    func select(index: Int) {
+        let id = characters[index].id
+        onUpdated?(.selected(characterId: id))
     }
 }

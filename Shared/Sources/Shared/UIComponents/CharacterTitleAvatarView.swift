@@ -129,4 +129,9 @@ public class CharacterTitleAvatarView: UIView {
         characterImageView.image = nil
         characterNameLabel.text = ""
     }
+
+    public func changeToDetailStyle() {
+        characterImageView.layer.cornerRadius = 0
+        characterNameLabel.font = UIFont.systemFont(ofSize: 40, weight: .heavy)
+    }
 }

@@ -68,6 +68,12 @@ public class HeartButton: UIControl {
         redHeart.centerXAnchor.constraint(equalTo: whiteHeart.centerXAnchor).isActive = true
         redHeart.centerYAnchor.constraint(equalTo: whiteHeart.centerYAnchor).isActive = true
 
+        if isRedHeartHidden {
+            closeHeart()
+        } else {
+            openHeart()
+        }
+
         self.addTarget(self, action: #selector(touchUpInSide), for: .touchUpInside)
     }
 

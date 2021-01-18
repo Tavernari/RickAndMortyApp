@@ -1,11 +1,12 @@
 //
-//  File.swift
+//  TableViewDataSource+makeCell.swift
 //  
 //
 //  Created by Victor C Tavernari on 15/01/21.
 //
 
 import Foundation
+import Shared
 
 extension TableViewDataSource where Model == CharacterListViewModel.ViewData, Cell == CharacterListCell {
     static func make(for models: [CharacterListViewModel.ViewData],

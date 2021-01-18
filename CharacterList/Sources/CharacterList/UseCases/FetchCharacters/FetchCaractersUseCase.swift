@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Shared
 
 protocol CharactersRepository {
     func fetch(page: Int) -> Future<[Character], CharacterListError>

@@ -1,7 +1,7 @@
 import XCTest
 
-import UIComponentsTests
+import SharedTests
 
 var tests = [XCTestCaseEntry]()
-tests += UIComponentsTests.allTests()
+tests += SharedTests.allTests()
 XCTMain(tests)

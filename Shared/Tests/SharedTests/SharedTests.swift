@@ -1,12 +1,12 @@
 import XCTest
-@testable import UIComponents
+@testable import Shared
 
-final class UIComponentsTests: XCTestCase {
+final class SharedTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(UIComponents().text, "Hello, World!")
+        XCTAssertEqual(Shared().text, "Hello, World!")
     }
 
     static var allTests = [

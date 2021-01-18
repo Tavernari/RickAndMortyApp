@@ -1,29 +1,25 @@
 //
-//  CharacterListCell.swift
+//  CharacterDetailsHeaderCell.swift
 //  
 //
-//  Created by Victor C Tavernari on 15/01/21.
+//  Created by Victor C Tavernari on 18/01/21.
 //
 
 import UIKit
 import Shared
 
-class CharacterListCell: UITableViewCell {
-    static let reuseIdentifier = "CharacterListCell"
-    override var reuseIdentifier: String? { CharacterListCell.reuseIdentifier }
+class CharacterDetailsHeaderCell: UITableViewCell {
+    static let reuseIdentifier = "CharacterDetailsHeaderCell"
+    override var reuseIdentifier: String? { CharacterDetailsHeaderCell.reuseIdentifier }
 
     private lazy var characterTitleAvatarView = CharacterTitleAvatarView()
 
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
 
+        characterTitleAvatarView.changeToDetailStyle()
         characterTitleAvatarView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(characterTitleAvatarView)
-
-        contentView.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
-        contentView.layer.shadowOffset = .init(width: 0, height: 5)
-        contentView.layer.shadowRadius = 4
-        contentView.layer.shadowOpacity = 0.15
     }
 
     override func didMoveToSuperview() {
@@ -45,7 +41,7 @@ class CharacterListCell: UITableViewCell {
     }
 
     var isFavorite: Bool {
-        get {  characterTitleAvatarView.isFavorited }
+        get { characterTitleAvatarView.isFavorited }
         set { characterTitleAvatarView.isFavorited = newValue }
     }
 

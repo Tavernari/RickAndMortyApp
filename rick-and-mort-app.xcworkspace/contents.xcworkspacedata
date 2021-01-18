@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:RickAndMortyRestAPI">
+      location = "group:Shared">
    </FileRef>
    <FileRef
-      location = "group:UIComponents">
+      location = "group:RickAndMortyRestAPI">
    </FileRef>
    <FileRef
       location = "group:CharacterDetails">

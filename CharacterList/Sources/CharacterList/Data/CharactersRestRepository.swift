@@ -7,11 +7,13 @@
 
 import Combine
 import RickAndMortyRestAPI
+import Shared
 
 class CharactersRestRepository: CharactersRepository {
+    
     private var allCharactersCancelable: AnyCancellable?
-    func fetch(page: Int) -> Future<[CharacterList.Character], CharacterListError> {
-        return Future<[CharacterList.Character], CharacterListError> { promise in
+    func fetch(page: Int) -> Future<[Character], CharacterListError> {
+        return Future<[Character], CharacterListError> { promise in
             self.allCharactersCancelable = RickAndMortyRestAPI.allCharacters(page: page).sink { completion in
                 switch completion {
                 case .failure(let error):

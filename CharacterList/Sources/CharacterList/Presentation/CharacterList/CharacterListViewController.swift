@@ -6,16 +6,23 @@
 //
 
 import UIKit
-import UIComponents
+import Shared
+
+protocol CharacterListViewControllerDelegate: class {
+    func selected(from: CharacterListViewController, characterId: Int)
+}
 
 class CharacterListViewController: UIViewController {
+
+    weak var delegate: CharacterListViewControllerDelegate?
+
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(CharacterListCell.self,
                                 forCellReuseIdentifier: CharacterListCell.reuseIdentifier)
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 400
+        tableView.estimatedRowHeight = 50
         tableView.delegate = self
         tableView.bounces = true
         tableView.bouncesZoom = true
@@ -24,7 +31,7 @@ class CharacterListViewController: UIViewController {
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsMultipleSelection = false
-        tableView.allowsSelection = false
+//        tableView.allowsSelection = false
         return tableView
     }()
 
@@ -102,6 +109,8 @@ class CharacterListViewController: UIViewController {
                 self.hideLoadingView()
                 self.dataSource.models = self.viewModel.items
                 self.tableView.reloadData()
+            case .selected(let characterId):
+                self.delegate?.selected(from: self, characterId: characterId)
             }
         }
 
@@ -114,5 +123,10 @@ extension CharacterListViewController: UITableViewDelegate {
         if (scrollView.contentOffset.y + 1) >= (scrollView.contentSize.height - scrollView.frame.size.height) {
             viewModel.fetchCharacters()
         }
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.select(index: indexPath.item)
+        tableView.deselectRow(at: indexPath, animated: false)
     }
 }

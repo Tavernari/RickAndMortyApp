@@ -17,6 +17,10 @@ extension CharacterDetailsViewModel.ViewData {
             return CharacterDetailsHeaderCell.reuseIdentifier
         case .info:
             return CharacterDetailsInfoViewCell.reuseIdentifier
+        case .location:
+            return CharacterDetailsLocationViewCell.reuseIdentifier
+        case .title:
+            return CharacterDetailsTitleViewCell.reuseIdentifier
         }
     }
 }
@@ -43,6 +47,15 @@ extension TableViewDataSource where Model == CharacterDetailsViewModel.ViewData,
                 guard let cell = cell as? CharacterDetailsHeaderCell else { return }
                 cell.render(name: name, avatarImage: avatar)
                 cell.isFavorite = isFavorite
+
+            case let .location(origin, location):
+                guard let cell = cell as? CharacterDetailsLocationViewCell else { return }
+                cell.location = location
+                cell.origin = origin
+
+            case let .title(title):
+                guard let cell = cell as? CharacterDetailsTitleViewCell else { return }
+                cell.title = title
             }
         }
     }

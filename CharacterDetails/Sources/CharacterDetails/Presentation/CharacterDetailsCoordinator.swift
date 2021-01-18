@@ -19,6 +19,6 @@ public class CharacterDetailsCoordinator: Coordinator {
 
     public func start() {
         let vc = CharacterDetailsViewController()
-        self.navigationController.present(vc, animated: true, completion: nil)
+        self.navigationController.pushViewController(vc, animated: true)
     }
 }

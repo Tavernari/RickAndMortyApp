@@ -31,7 +31,7 @@ class CharacterListCell: UITableViewCell {
 
         characterTitleAvatarView.setContentCompressionResistancePriority(.init(1000), for: .vertical)
 
-        characterTitleAvatarView.heightAnchor.constraint(equalToConstant: 400).isActive = true
+        characterTitleAvatarView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         characterTitleAvatarView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
         characterTitleAvatarView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
         characterTitleAvatarView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true

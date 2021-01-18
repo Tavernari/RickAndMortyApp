@@ -16,8 +16,6 @@ class CharacterDetailsHeaderCell: UITableViewCell {
 
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
-
-        characterTitleAvatarView.changeToDetailStyle()
         characterTitleAvatarView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(characterTitleAvatarView)
     }
@@ -27,13 +25,15 @@ class CharacterDetailsHeaderCell: UITableViewCell {
 
         characterTitleAvatarView.setContentCompressionResistancePriority(.init(1000), for: .vertical)
 
-        characterTitleAvatarView.heightAnchor.constraint(equalToConstant: 400).isActive = true
-        characterTitleAvatarView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
+        characterTitleAvatarView.heightAnchor.constraint(equalToConstant: 350).isActive = true
+        characterTitleAvatarView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
         characterTitleAvatarView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
         characterTitleAvatarView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16).isActive = true
-        characterTitleAvatarView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+        characterTitleAvatarView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         characterTitleAvatarView.updateConstraints()
+
+        characterTitleAvatarView.changeToDetailStyle()
     }
 
     func render(name: String, avatarImage: String) {

@@ -16,6 +16,8 @@ class CharacterDetailsViewController: UIViewController {
         tableView.register(CharacterDetailsHeaderCell.self, forCellReuseIdentifier: CharacterDetailsHeaderCell.reuseIdentifier)
         tableView.register(CharacterDetailsEpisodesCell.self, forCellReuseIdentifier: CharacterDetailsEpisodesCell.reuseIdentifier)
         tableView.register(CharacterDetailsInfoViewCell.self, forCellReuseIdentifier: CharacterDetailsInfoViewCell.reuseIdentifier)
+        tableView.register(CharacterDetailsLocationViewCell.self, forCellReuseIdentifier: CharacterDetailsLocationViewCell.reuseIdentifier)
+        tableView.register(CharacterDetailsTitleViewCell.self, forCellReuseIdentifier: CharacterDetailsTitleViewCell.reuseIdentifier)
 
         tableView.separatorStyle = .none
         tableView.rowHeight = UITableView.automaticDimension
@@ -34,14 +36,10 @@ class CharacterDetailsViewController: UIViewController {
 
     lazy var dataSource = TableViewDataSource.make(for: viewModel.items, withViewModel: viewModel)
 
-    lazy var characterTitleAvatarView: CharacterTitleAvatarView = {
-        let view = CharacterTitleAvatarView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        title = "Rick Sanchez"
 
         view.addSubview(tableView)
 
@@ -49,10 +47,6 @@ class CharacterDetailsViewController: UIViewController {
         tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-
-        characterTitleAvatarView.changeToDetailStyle()
-
-        characterTitleAvatarView.render(name: "Rick Sanchez", avatarImage: "https://rickandmortyapi.com/api/character/avatar/1.jpeg")
 
         view.backgroundColor = .systemBackground
     }

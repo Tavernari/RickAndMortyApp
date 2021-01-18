@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  LocationDTO.swift
 //  
 //
 //  Created by Victor C Tavernari on 15/01/21.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Location: Codable {
+public struct LocationDTO: Codable {
     public let name: String
     public let url: String
 

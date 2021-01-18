@@ -8,15 +8,15 @@
 import Foundation
 
 public struct FetchCharactersResponse: Codable {
-    public let info: FetchCharactersInfo
-    public let results: [Character]
+    public let info: FetchCharactersInfoDTO
+    public let results: [CharacterDTO]
 
     enum CodingKeys: String, CodingKey {
         case info
         case results
     }
 
-    public init(info: FetchCharactersInfo, results: [Character]) {
+    public init(info: FetchCharactersInfoDTO, results: [CharacterDTO]) {
         self.info = info
         self.results = results
     }

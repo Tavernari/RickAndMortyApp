@@ -11,7 +11,10 @@ import Shared
 
 public class RemoveFromFavoriteUseCase {
     var respository: FavoritesCharactersRepository = LocalFavoritesCharactersRepository()
-    func run(character: Character) -> Future<Void, Error> {
+    
+    public init() {}
+
+    public func run(character: Character) -> Future<Void, Error> {
         return self.respository.remove(character: character)
     }
 }

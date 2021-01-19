@@ -33,8 +33,10 @@ class CharacterListViewModel {
     private var favorited = Set<Int>()
 
     private let fetchCaractersUseCase: FetchCharactersUseCase
-    init(fetchCaractersUseCase: FetchCharactersUseCase) {
+    private let favoriteCharacter: Shared.FavoriteCharactersAdapter
+    init(fetchCaractersUseCase: FetchCharactersUseCase, favoriteCharactersAdapter: Shared.FavoriteCharactersAdapter) {
         self.fetchCaractersUseCase = fetchCaractersUseCase
+        self.favoriteCharacter = favoriteCharactersAdapter
     }
 
     func fetchCharacters() {
@@ -64,18 +66,18 @@ class CharacterListViewModel {
     }
 
     func favorite(index: Int) {
-        let id = characters[index].id
-        favorited.insert(id)
+        let character = characters[index]
+        _ = favoriteCharacter.addToFavorites(character: character)
     }
 
-    func unfavorite(index: Int) {
-        let id = characters[index].id
-        favorited.remove(id)
+    func unfavorite(index: Int)  {
+        let character = characters[index]
+        _ = favoriteCharacter.removeFromFavorites(character: character)
     }
 
-    func wasFavorited(index: Int) -> Bool {
-        let id = characters[index].id
-        return favorited.contains(id)
+    func wasFavorited(index: Int) -> Future<Bool, Error> {
+        let character = characters[index]
+        return favoriteCharacter.wasFavorited(character: character)
     }
 
     func select(index: Int) {

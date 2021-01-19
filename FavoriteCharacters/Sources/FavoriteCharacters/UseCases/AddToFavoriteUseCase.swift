@@ -11,7 +11,10 @@ import Shared
 
 public class AddToFavoriteUseCase {
     var respository: FavoritesCharactersRepository = LocalFavoritesCharactersRepository()
-    func run(character: Character) -> Future<Void, Error> {
+
+    public init() {}
+
+    public func run(character: Character) -> Future<Void, Error> {
         return self.respository.save(character: character)
     }
 }

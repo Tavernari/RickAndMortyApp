@@ -12,7 +12,10 @@ import Shared
 public class CheckIfCharacterWasFavoritedUseCase {
     var respository: FavoritesCharactersRepository = LocalFavoritesCharactersRepository()
     private var cancellable: AnyCancellable?
-    func run(character: Character) -> Future<Bool, Error> {
+    
+    public init() {}
+
+    public func run(character: Character) -> Future<Bool, Error> {
         return Future<Bool, Error> { promise in
             self.cancellable?.cancel()
             self.cancellable = self.respository.get().sink { (completion) in

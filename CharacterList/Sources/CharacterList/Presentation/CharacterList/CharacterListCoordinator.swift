@@ -26,7 +26,9 @@ public class CharacterListCoordinator: Coordinator {
         vc.delegate = self
         let repository = CharactersRestRepository()
         let useCase = FetchCharactersUseCase(repository: repository)
-        vc.viewModel = CharacterListViewModel(fetchCaractersUseCase: useCase)
+        let favoriteCharacter = FavoriteCharactersAdapter()
+        vc.viewModel = CharacterListViewModel(fetchCaractersUseCase: useCase,
+                                              favoriteCharactersAdapter: favoriteCharacter)
         
         self.navigationController.viewControllers = [vc]
     }

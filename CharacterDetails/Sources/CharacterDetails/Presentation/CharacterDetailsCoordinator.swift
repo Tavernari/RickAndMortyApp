@@ -19,7 +19,9 @@ public class CharacterDetailsCoordinator: Coordinator {
 
     public func start() {
         let vc = CharacterDetailsViewController()
-        vc.viewModel = CharacterDetailsViewModel(character: character)
+        let favoriteCharacterAdapter = FavoriteCharactersAdapter()
+        vc.viewModel = CharacterDetailsViewModel(character: character,
+                                                 favoriteCharacterAdapter: favoriteCharacterAdapter)
         self.navigationController.pushViewController(vc, animated: true)
     }
 }

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  FavoriteCharactersAdapter.swift
 //  
 //
 //  Created by Victor C Tavernari on 19/01/21.

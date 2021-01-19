@@ -7,6 +7,7 @@
 
 import Foundation
 import Shared
+import Combine
 
 class CharacterDetailsViewModel {
     enum ViewData {
@@ -20,8 +21,13 @@ class CharacterDetailsViewModel {
     var items: [ViewData] = []
 
     let name: String
+    private let character: Character
+    private let favoriteCharacter: Shared.FavoriteCharactersAdapter
+    init(character: Character, favoriteCharacterAdapter: Shared.FavoriteCharactersAdapter) {
 
-    init(character: Character) {
+        self.favoriteCharacter = favoriteCharacterAdapter
+        self.character = character
+
         self.name = character.name
 
         let status: String
@@ -57,5 +63,17 @@ class CharacterDetailsViewModel {
         }
         items.append(.info(title: "Is it alive?", value: status))
         items.append(.episodes(episodes: character.episode))
+    }
+
+    func favorite() {
+        _ = favoriteCharacter.addToFavorites(character: character)
+    }
+
+    func unfavorite()  {
+        _ = favoriteCharacter.removeFromFavorites(character: character)
+    }
+
+    func wasFavorited() -> Future<Bool, Error> {
+        return favoriteCharacter.wasFavorited(character: character)
     }
 }

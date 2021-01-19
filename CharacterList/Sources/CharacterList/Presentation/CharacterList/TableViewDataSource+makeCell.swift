@@ -16,6 +16,7 @@ extension TableViewDataSource where Model == CharacterListViewModel.ViewData, Ce
             reuseIdentifier: CharacterListCell.reuseIdentifier
         ) { (model, cell, indexPath) in
             let index = indexPath.item
+            
             _ = viewModel.wasFavorited(index: index).sink { completion in
                 switch completion {
                 case .failure:
@@ -25,6 +26,7 @@ extension TableViewDataSource where Model == CharacterListViewModel.ViewData, Ce
             } receiveValue: { value in
                 cell.isFavorite = value
             }
+
             cell.onFavoriteTouched = {
                 if cell.isFavorite {
                     viewModel.favorite(index: index)

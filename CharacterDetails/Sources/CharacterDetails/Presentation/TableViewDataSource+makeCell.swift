@@ -48,6 +48,24 @@ extension TableViewDataSource where Model == CharacterDetailsViewModel.ViewData,
                 cell.render(name: name, avatarImage: avatar)
                 cell.isFavorite = isFavorite
 
+                cell.onFavoriteTouched = {
+                    if cell.isFavorite {
+                        viewModel.favorite()
+                    } else {
+                        viewModel.unfavorite()
+                    }
+                }
+
+                _ = viewModel.wasFavorited().sink { completion in
+                    switch completion {
+                    case .failure:
+                        cell.isFavorite = false
+                    default: break
+                    }
+                } receiveValue: { value in
+                    cell.isFavorite = value
+                }
+
             case let .location(origin, location):
                 guard let cell = cell as? CharacterDetailsLocationViewCell else { return }
                 cell.location = location

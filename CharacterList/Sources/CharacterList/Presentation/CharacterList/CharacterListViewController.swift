@@ -120,6 +120,7 @@ class CharacterListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
         navigationController?.navigationBar.sizeToFit()
+        tableView.reloadData()
     }
 }
 

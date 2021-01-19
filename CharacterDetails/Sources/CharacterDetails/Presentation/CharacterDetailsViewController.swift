@@ -32,14 +32,14 @@ class CharacterDetailsViewController: UIViewController {
         tableView.allowsSelection = false
         return tableView
     }()
-    var viewModel: CharacterDetailsViewModel! = .init()
+    var viewModel: CharacterDetailsViewModel!
 
     lazy var dataSource = TableViewDataSource.make(for: viewModel.items, withViewModel: viewModel)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Rick Sanchez"
+        title = viewModel.name
 
         view.addSubview(tableView)
 

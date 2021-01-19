@@ -28,6 +28,7 @@ class CharacterDetailsLocationViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 23, weight: .regular)
         label.textColor = .systemTeal
+        label.numberOfLines = -1
         return label
     }()
 
@@ -36,6 +37,7 @@ class CharacterDetailsLocationViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 23, weight: .regular)
         label.textColor = .systemTeal
+        label.numberOfLines = -1
         return label
     }()
 
@@ -62,10 +64,10 @@ class CharacterDetailsLocationViewCell: UITableViewCell {
     lazy var mainStack: UIStackView = {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.alignment = .center
-        stack.axis = .horizontal
+        stack.alignment = .leading
+        stack.axis = .vertical
         stack.distribution = .fill
-        stack.spacing = 32
+        stack.spacing = 2
         return stack
     }()
 

@@ -14,7 +14,7 @@ protocol CharactersRepository {
 
 class FetchCharactersUseCase {
 
-    var currentPage = -1
+    var currentPage = 0
     var isLoading = false
     private let repository: CharactersRepository
     init(repository: CharactersRepository) {

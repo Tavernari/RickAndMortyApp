@@ -15,7 +15,7 @@ class CharacterListViewModel {
         case loading
         case done
         case failed
-        case selected(characterId: Int)
+        case selected(character: Character)
     }
 
     struct ViewData {
@@ -79,7 +79,7 @@ class CharacterListViewModel {
     }
 
     func select(index: Int) {
-        let id = characters[index].id
-        onUpdated?(.selected(characterId: id))
+        let character = characters[index]
+        onUpdated?(.selected(character: character))
     }
 }

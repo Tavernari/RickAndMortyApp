@@ -9,7 +9,7 @@ import UIKit
 import Shared
 
 public protocol CharacterListCoordinatorDelegate: class {
-    func showDetail(from: CharacterListCoordinator, characterId: Int)
+    func showDetail(from: CharacterListCoordinator, character: Character)
 }
 
 public class CharacterListCoordinator: Coordinator {
@@ -33,7 +33,7 @@ public class CharacterListCoordinator: Coordinator {
 }
 
 extension CharacterListCoordinator: CharacterListViewControllerDelegate {
-    func selected(from: CharacterListViewController, characterId: Int) {
-        self.delegate?.showDetail(from: self, characterId: characterId)
+    func selected(from: CharacterListViewController, character: Character) {
+        self.delegate?.showDetail(from: self, character: character)
     }
 }

@@ -9,7 +9,7 @@ import UIKit
 import Shared
 
 protocol CharacterListViewControllerDelegate: class {
-    func selected(from: CharacterListViewController, characterId: Int)
+    func selected(from: CharacterListViewController, character: Character)
 }
 
 class CharacterListViewController: UIViewController {
@@ -109,8 +109,8 @@ class CharacterListViewController: UIViewController {
                 self.hideLoadingView()
                 self.dataSource.models = self.viewModel.items
                 self.tableView.reloadData()
-            case .selected(let characterId):
-                self.delegate?.selected(from: self, characterId: characterId)
+            case .selected(let character):
+                self.delegate?.selected(from: self, character: character)
             }
         }
 

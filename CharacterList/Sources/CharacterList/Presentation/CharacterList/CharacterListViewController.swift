@@ -31,7 +31,6 @@ class CharacterListViewController: UIViewController {
 
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.allowsMultipleSelection = false
-//        tableView.allowsSelection = false
         return tableView
     }()
 
@@ -82,7 +81,6 @@ class CharacterListViewController: UIViewController {
         super.viewDidLoad()
 
         title = "Characters"
-        navigationController?.navigationBar.prefersLargeTitles = true
 
         view.addSubview(tableView)
         view.addSubview(activityIndicatorView)
@@ -115,6 +113,13 @@ class CharacterListViewController: UIViewController {
         }
 
         viewModel.fetchCharacters()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.sizeToFit()
     }
 }
 

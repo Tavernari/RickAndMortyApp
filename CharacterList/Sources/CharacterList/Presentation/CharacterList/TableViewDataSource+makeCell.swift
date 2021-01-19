@@ -23,8 +23,8 @@ extension TableViewDataSource where Model == CharacterListViewModel.ViewData, Ce
                     cell.isFavorite = false
                 default: break
                 }
-            } receiveValue: { value in
-                cell.isFavorite = value
+            } receiveValue: { favorited in
+                cell.isFavorite = favorited
             }
 
             cell.onFavoriteTouched = {

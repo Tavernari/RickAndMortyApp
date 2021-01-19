@@ -30,10 +30,22 @@ public class CharacterTitleAvatarView: UIView {
         get {
             return !favoriteButton.isRedHeartHidden
         }
+    }
 
-        set {
-            favoriteButton.isRedHeartHidden = !newValue
+    public func favorite(animated: Bool = true) {
+        if !animated {
+            favoriteButton.openHeart()
         }
+
+        favoriteButton.isRedHeartHidden = false
+    }
+
+    public func unfavorite(animated: Bool = true) {
+        if !animated {
+            favoriteButton.closeHeart()
+        }
+
+        favoriteButton.isRedHeartHidden = true
     }
 
     private lazy var activityIndicator: UIActivityIndicatorView = {
@@ -135,7 +147,6 @@ public class CharacterTitleAvatarView: UIView {
     }
 
     public func changeToDetailStyle() {
-//        characterImageView.layer.cornerRadius = 0
         characterNameLabelContainer.isHidden = true
     }
 }

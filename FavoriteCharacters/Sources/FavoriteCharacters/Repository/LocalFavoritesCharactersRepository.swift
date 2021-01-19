@@ -54,6 +54,9 @@ class LocalFavoritesCharactersRepository: FavoritesCharactersRepository {
         LocalFavoritesCharactersRepository
             .userDefaults
             .set(encodeData, forKey: LocalFavoritesCharactersRepository.storageKey)
+        LocalFavoritesCharactersRepository
+            .userDefaults
+            .synchronize()
     }
 
     func remove(character: Character) -> Future<Void, Error> {

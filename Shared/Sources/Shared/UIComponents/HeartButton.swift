@@ -69,9 +69,9 @@ public class HeartButton: UIControl {
         redHeart.centerYAnchor.constraint(equalTo: whiteHeart.centerYAnchor).isActive = true
 
         if isRedHeartHidden {
-            closeHeart()
+            animateCloseHeart()
         } else {
-            openHeart()
+            animateOpenHeart()
         }
 
         self.addTarget(self, action: #selector(touchUpInSide), for: .touchUpInside)
@@ -85,11 +85,26 @@ public class HeartButton: UIControl {
     var isRedHeartHidden: Bool = true {
         didSet {
             if isRedHeartHidden {
-                closeHeart()
+                animateCloseHeart()
             } else {
-                openHeart()
+                animateOpenHeart()
             }
         }
+    }
+
+    func openHeart() {
+        redHeartCloseWidthConstraint?.isActive = false
+        redHeartCloseHeightConstraint?.isActive = false
+        redHeartOpenWidthConstraint?.isActive = true
+        redHeartOpenHeightConstraint?.isActive = true
+    }
+
+    func closeHeart() {
+        redHeartOpenWidthConstraint?.isActive = false
+        redHeartOpenHeightConstraint?.isActive = false
+        redHeartCloseWidthConstraint?.isActive = true
+        redHeartCloseHeightConstraint?.isActive = true
+
     }
 
     private func removeAllAnimations() {
@@ -98,26 +113,20 @@ public class HeartButton: UIControl {
         layer.removeAllAnimations()
     }
 
-    private func closeHeart() {
+    private func animateCloseHeart() {
         removeAllAnimations()
         layoutIfNeeded()
-        redHeartOpenWidthConstraint?.isActive = false
-        redHeartOpenHeightConstraint?.isActive = false
         UIView.animate(withDuration: 0.4, delay: 0, options: .curveEaseIn, animations: {
-            self.redHeartCloseWidthConstraint?.isActive = true
-            self.redHeartCloseHeightConstraint?.isActive = true
+            self.closeHeart()
             self.setNeedsLayout()
         })
     }
 
-    private func openHeart() {
+    private func animateOpenHeart() {
         removeAllAnimations()
         layoutIfNeeded()
-        redHeartCloseWidthConstraint?.isActive = false
-        redHeartCloseHeightConstraint?.isActive = false
         UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut, animations: {
-            self.redHeartOpenWidthConstraint?.isActive = true
-            self.redHeartOpenHeightConstraint?.isActive = true
+            self.openHeart()
             self.layoutIfNeeded()
         })
     }

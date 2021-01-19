@@ -42,7 +42,13 @@ class CharacterDetailsHeaderCell: UITableViewCell {
 
     var isFavorite: Bool {
         get { characterTitleAvatarView.isFavorited }
-        set { characterTitleAvatarView.isFavorited = newValue }
+        set {
+            if newValue {
+                characterTitleAvatarView.favorite(animated: false)
+            } else {
+                characterTitleAvatarView.unfavorite(animated: false)
+            }
+        }
     }
 
     var onFavoriteTouched: (()->Void)? {

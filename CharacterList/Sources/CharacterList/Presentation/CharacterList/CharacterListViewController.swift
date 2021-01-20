@@ -113,6 +113,8 @@ class CharacterListViewController: UIViewController {
         }
 
         viewModel.fetchCharacters()
+
+        view.backgroundColor = .systemBackground
     }
 
     override func viewWillAppear(_ animated: Bool) {

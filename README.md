@@ -17,10 +17,10 @@ If you prefer you also can run using fastlane using `fastlane test`
 ![Application Scheme](./PlanningFiles/RickApp-App_Modules.png)
 
 ### Character List Scheme (simplified)
-![Application Scheme]((./PlanningFiles/RickApp-Character_List.png))
+![Character List Scheme]((./PlanningFiles/RickApp-Character_List.png))
 
 ### Character Details Scheme (simplified)
-![Application Scheme]((./PlanningFiles/RickApp-Character_Details.png))
+![Character Details Scheme]((./PlanningFiles/RickApp-Character_Details.png))
 
 ### Favorite Characters Feature Scheme
-![Application Scheme]((./PlanningFiles/RickApp-Favorite_Characters.png))
+![Favorite Characters Feature Scheme]((./PlanningFiles/RickApp-Favorite_Characters.png))

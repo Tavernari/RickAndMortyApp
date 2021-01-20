@@ -10,7 +10,7 @@ import Shared
 import Combine
 
 class CharacterDetailsViewModel {
-    enum ViewData {
+    enum ViewData: Equatable {
         case header(name: String, avatar: String, isFavorite: Bool)
         case title(title: String)
         case info(title: String, value: String)

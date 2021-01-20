@@ -77,24 +77,45 @@ class CharacterListViewController: UIViewController {
         self.present(alert, animated: true)
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private func applyConstraints() {
+        let viewSafeArea = view.safeAreaLayoutGuide
 
-        title = "Characters"
+        activityIndicatorView
+            .bottomAnchor
+            .constraint(equalTo: viewSafeArea.bottomAnchor)
+            .isActive = true
+        activityIndicatorView
+            .leftAnchor
+            .constraint(equalTo: viewSafeArea.leftAnchor)
+            .isActive = true
+        activityIndicatorView
+            .rightAnchor
+            .constraint(equalTo: viewSafeArea.rightAnchor)
+            .isActive = true
+        activityIndicatorView
+            .heightAnchor
+            .constraint(equalToConstant: 50)
+            .isActive = true
 
-        view.addSubview(tableView)
-        view.addSubview(activityIndicatorView)
+        tableView
+            .topAnchor
+            .constraint(equalTo: viewSafeArea.topAnchor)
+            .isActive = true
+        tableView
+            .leftAnchor
+            .constraint(equalTo: viewSafeArea.leftAnchor)
+            .isActive = true
+        tableView
+            .rightAnchor
+            .constraint(equalTo: viewSafeArea.rightAnchor)
+            .isActive = true
+        tableView
+            .bottomAnchor
+            .constraint(equalTo: viewSafeArea.bottomAnchor)
+            .isActive = true
+    }
 
-        activityIndicatorView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        activityIndicatorView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        activityIndicatorView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        activityIndicatorView.heightAnchor.constraint(equalToConstant: 50).isActive = true
-
-        tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        tableView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-
+    private func binViewModelUpdate() {
         viewModel.onUpdated = { [weak self] state in
             guard let self = self else { return }
             switch state {
@@ -111,7 +132,18 @@ class CharacterListViewController: UIViewController {
                 self.delegate?.selected(from: self, character: character)
             }
         }
+    }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        title = "Characters"
+
+        view.addSubview(tableView)
+        view.addSubview(activityIndicatorView)
+
+        applyConstraints()
+        binViewModelUpdate()
         viewModel.fetchCharacters()
 
         view.backgroundColor = .systemBackground

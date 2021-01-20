@@ -30,22 +30,31 @@ final class CharacterDetailsViewModelTests: XCTestCase {
     lazy var viewController = CharacterDetailsViewController()
 
     fileprivate func assertStructure(isFavorited: Bool) {
-        XCTAssertEqual(viewModel.items[0], CharacterDetailsViewModel.ViewData.header(name: "Rick Morty",
-                                                                                     avatar: "",
-                                                                                     isFavorite: isFavorited))
-        XCTAssertEqual(viewModel.items[1], CharacterDetailsViewModel.ViewData.title(title: "Location"))
-        XCTAssertEqual(viewModel.items[2], CharacterDetailsViewModel.ViewData.location(origin: "Origin",
-                                                                                       location: "Location"))
-        XCTAssertEqual(viewModel.items[3], CharacterDetailsViewModel.ViewData.title(title: "Infos"))
-        XCTAssertEqual(viewModel.items[4], CharacterDetailsViewModel.ViewData.info(title: "Gender",
-                                                                                   value: "Not defined"))
-        XCTAssertEqual(viewModel.items[5], CharacterDetailsViewModel.ViewData.info(title: "Species",
-                                                                                   value: "species"))
-        XCTAssertEqual(viewModel.items[6], CharacterDetailsViewModel.ViewData.info(title: "Type",
-                                                                                   value: "type"))
-        XCTAssertEqual(viewModel.items[7], CharacterDetailsViewModel.ViewData.info(title: "Is it alive?",
-                                                                                   value: "Who's know?"))
-        XCTAssertEqual(viewModel.items[8], CharacterDetailsViewModel.ViewData.episodes(episodes: []))
+        XCTAssertEqual(viewModel.items[0],
+                       CharacterDetailsViewModel.ViewData.header(name: "Rick Morty",
+                                                                 avatar: "",
+                                                                 isFavorite: isFavorited))
+        XCTAssertEqual(viewModel.items[1],
+                       CharacterDetailsViewModel.ViewData.title(title: "Location"))
+        XCTAssertEqual(viewModel.items[2],
+                       CharacterDetailsViewModel.ViewData.location(origin: "Origin",
+                                                                   location: "Location"))
+        XCTAssertEqual(viewModel.items[3],
+                       CharacterDetailsViewModel.ViewData.title(title: "Infos"))
+        XCTAssertEqual(viewModel.items[4],
+                       CharacterDetailsViewModel.ViewData.info(title: "Gender",
+                                                               value: "Undefined"))
+        XCTAssertEqual(viewModel.items[5],
+                       CharacterDetailsViewModel.ViewData.info(title: "Species",
+                                                               value: "species"))
+        XCTAssertEqual(viewModel.items[6],
+                       CharacterDetailsViewModel.ViewData.info(title: "Type",
+                                                               value: "type"))
+        XCTAssertEqual(viewModel.items[7],
+                       CharacterDetailsViewModel.ViewData.info(title: "Is it alive?",
+                                                               value: "Who's know?"))
+        XCTAssertEqual(viewModel.items[8],
+                       CharacterDetailsViewModel.ViewData.episodes(episodes: []))
     }
 
     func testViewModelViewData() {

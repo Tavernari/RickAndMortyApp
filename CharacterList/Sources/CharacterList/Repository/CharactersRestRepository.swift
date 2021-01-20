@@ -9,47 +9,6 @@ import Combine
 import RickAndMortyRestAPI
 import Shared
 
-extension StatusDTO {
-    var convertedStatus: Status {
-        switch self {
-        case .alive:
-            return .alive
-        case .dead:
-            return .dead
-        case .unknown:
-            return .unknown
-        }
-    }
-}
-
-extension GenderDTO {
-    var convertedGender: Gender {
-        switch self {
-        case .female:
-            return .female
-        case .male:
-            return .male
-        default:
-            return .notDefined
-        }
-    }
-}
-
-extension Character {
-    init(characterDTO: CharacterDTO) {
-        self.init(id: characterDTO.id,
-                  name: characterDTO.name,
-                  avatar: characterDTO.image,
-                  status: characterDTO.status.convertedStatus,
-                  species: characterDTO.species,
-                  type: characterDTO.type,
-                  gender: characterDTO.gender.convertedGender,
-                  origin: characterDTO.origin.name,
-                  location: characterDTO.location.name,
-                  episode: characterDTO.episode)
-    }
-}
-
 class CharactersRestRepository: CharactersRepository {
     
     private var allCharactersCancelable: AnyCancellable?

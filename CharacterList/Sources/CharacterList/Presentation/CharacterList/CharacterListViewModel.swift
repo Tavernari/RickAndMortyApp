@@ -28,8 +28,8 @@ class CharacterListViewModel {
         let imagePath: String
     }
 
-    private var allFavorites: [ViewData] = []
-    private var allCharacters: [ViewData] = []
+    var allFavorites: [ViewData] = []
+    var allCharacters: [ViewData] = []
     var segment: Segment = .allCharacters {
         didSet {
             switch segment {

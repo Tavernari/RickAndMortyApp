@@ -36,10 +36,11 @@ final class CharacterListViewControllerTests: XCTestCase {
 
     func testCharactersAllUnfavorite_onIPhoneX() {
         viewModel.favoritedMock = false
-        viewModel.items = [
+        viewModel.allCharacters = [
             .init(name: "Test", imagePath: ""),
             .init(name: "Test 2", imagePath: "")]
         viewModel.characters = [.mock(id: 1), .mock(id: 2)]
+        viewModel.segment = .allCharacters
 
         lifeCycle()
         
@@ -48,13 +49,14 @@ final class CharacterListViewControllerTests: XCTestCase {
 
     func testCharactersAllFavorited_onIPhoneX() {
         viewModel.favoritedMock = true
-        viewModel.items = [
+        viewModel.allCharacters = [
             .init(name: "Test", imagePath: ""),
             .init(name: "Test 2", imagePath: ""),
             .init(name: "Test 3", imagePath: "")]
         viewModel.characters = [.mock(id: 1),
                                 .mock(id: 2),
                                 .mock(id: 3)]
+        viewModel.segment = .allCharacters
 
         lifeCycle()
 

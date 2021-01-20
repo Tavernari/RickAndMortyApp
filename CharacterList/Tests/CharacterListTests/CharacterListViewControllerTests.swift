@@ -34,7 +34,7 @@ final class CharacterListViewControllerTests: XCTestCase {
         viewController.viewDidAppear(true)
     }
 
-    func testCharactersAllUnfavorite() {
+    func testCharactersAllUnfavorite_onIPhoneX() {
         viewModel.favoritedMock = false
         viewModel.items = [
             .init(name: "Test", imagePath: ""),
@@ -43,10 +43,10 @@ final class CharacterListViewControllerTests: XCTestCase {
 
         lifeCycle()
         
-        assertSnapshot(matching: viewController, as: .image)
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
 
-    func testCharactersAllFavorited() {
+    func testCharactersAllFavorited_onIPhoneX() {
         viewModel.favoritedMock = true
         viewModel.items = [
             .init(name: "Test", imagePath: ""),
@@ -58,6 +58,6 @@ final class CharacterListViewControllerTests: XCTestCase {
 
         lifeCycle()
 
-        assertSnapshot(matching: viewController, as: .image)
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
 }

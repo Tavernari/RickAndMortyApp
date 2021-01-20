@@ -44,18 +44,18 @@ final class CharacterDetailsViewControllerTests: XCTestCase {
         viewController.viewDidAppear(true)
     }
 
-    func testCharactersDetail() {
+    func testCharactersDetail_onIPhoneX() {
         favoriteAdapter.favoritedMock = false
         lifeCycle()
 
-        assertSnapshot(matching: viewController, as: .image)
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
 
-    func testCharactersDetailFavorited() {
+    func testCharactersDetailFavorited_onIPhoneX() {
         favoriteAdapter.favoritedMock = true
         lifeCycle()
 
-        assertSnapshot(matching: viewController, as: .image)
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
 }
 

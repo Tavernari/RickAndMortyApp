@@ -13,7 +13,6 @@
 		A16F25D125B7EF9900BE73A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A16F25CF25B7EF9900BE73A7 /* Main.storyboard */; };
 		A16F25D325B7EF9C00BE73A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A16F25D225B7EF9C00BE73A7 /* Assets.xcassets */; };
 		A16F25D625B7EF9C00BE73A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A16F25D425B7EF9C00BE73A7 /* LaunchScreen.storyboard */; };
-		A16F25E125B7EF9D00BE73A7 /* ApplicationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F25E025B7EF9D00BE73A7 /* ApplicationTests.swift */; };
 		A16F25EC25B7EF9D00BE73A7 /* ApplicationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A16F25EB25B7EF9D00BE73A7 /* ApplicationUITests.swift */; };
 		A16F260125B7F06A00BE73A7 /* CharacterDetails in Frameworks */ = {isa = PBXBuildFile; productRef = A16F260025B7F06A00BE73A7 /* CharacterDetails */; };
 		A16F260325B7F06A00BE73A7 /* CharacterList in Frameworks */ = {isa = PBXBuildFile; productRef = A16F260225B7F06A00BE73A7 /* CharacterList */; };
@@ -46,7 +45,6 @@
 		A16F25D525B7EF9C00BE73A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A16F25D725B7EF9C00BE73A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A16F25DC25B7EF9D00BE73A7 /* ApplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A16F25E025B7EF9D00BE73A7 /* ApplicationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationTests.swift; sourceTree = "<group>"; };
 		A16F25E225B7EF9D00BE73A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A16F25E725B7EF9D00BE73A7 /* ApplicationUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApplicationUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A16F25EB25B7EF9D00BE73A7 /* ApplicationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationUITests.swift; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 		A16F25DF25B7EF9D00BE73A7 /* ApplicationTests */ = {
 			isa = PBXGroup;
 			children = (
-				A16F25E025B7EF9D00BE73A7 /* ApplicationTests.swift */,
 				A16F25E225B7EF9D00BE73A7 /* Info.plist */,
 			);
 			path = ApplicationTests;
@@ -284,7 +281,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A16F25E125B7EF9D00BE73A7 /* ApplicationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

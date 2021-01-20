@@ -2,6 +2,8 @@
 
 This project target is make an example with a modular structure using Swift Package Manager as dependency manager
 
+![Example](./PlanningFiles/example_application.gif)
+
 ## How to run
 
 Clone this repository and open using XCode 12 or above.

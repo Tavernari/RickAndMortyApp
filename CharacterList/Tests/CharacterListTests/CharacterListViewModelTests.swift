@@ -29,7 +29,7 @@ final class CharacterListViewModelTests: XCTestCase {
             switch state {
             case .loading:
                 loadingExpectation.fulfill()
-            case .done:
+            case .itemsUpdated:
                 doneExpectation.fulfill()
                 XCTAssertEqual(viewModel.items.count, 3)
             default:
@@ -72,7 +72,7 @@ final class CharacterListViewModelTests: XCTestCase {
             switch state {
             case .loading:
                 loadingExpectation.fulfill()
-            case .done:
+            case .itemsUpdated:
                 doneExpectation.fulfill()
             default:
                 XCTFail()
@@ -95,7 +95,7 @@ final class CharacterListViewModelTests: XCTestCase {
             switch state {
             case .loading:
                 loadingExpectation.fulfill()
-            case .done:
+            case .itemsUpdated:
                 doneExpectation.fulfill()
                 XCTAssertEqual(viewModel.items.count, 2)
 
@@ -123,7 +123,7 @@ final class CharacterListViewModelTests: XCTestCase {
         viewModel.onUpdated = { [self] state in
             switch state {
             case .loading: break
-            case .done:
+            case .itemsUpdated:
                 viewModel.favorite(index: 0)
                 viewModel.favorite(index: 1)
                 viewModel.unfavorite(index: 0)

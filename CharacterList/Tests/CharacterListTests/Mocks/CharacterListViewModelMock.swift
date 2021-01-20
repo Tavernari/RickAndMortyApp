@@ -20,7 +20,7 @@ class CharacterListViewModelMock: CharacterListViewModel {
 
     override func fetchCharacters() {
         fetchCharactersCallCount += 1
-        self.onUpdated?(.done)
+        self.onUpdated?(.itemsUpdated)
     }
 
     override func unfavorite(index: Int) {

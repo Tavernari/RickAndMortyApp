@@ -13,6 +13,7 @@ class FavoriteCharactersAdapter: Shared.FavoriteCharactersAdapter {
     let addToFavoriteUseCase = AddToFavoriteUseCase()
     let removeFromFavoriteUseCase = RemoveFromFavoriteUseCase()
     let checkIfCharacterWasFavoritedUseCase = CheckIfCharacterWasFavoritedUseCase()
+    let allFavoritesUseCase = AllFavoritesUseCase()
 
     func addToFavorites(character: Character) -> Future<Void, Error> {
         return addToFavoriteUseCase.run(character: character)
@@ -24,5 +25,9 @@ class FavoriteCharactersAdapter: Shared.FavoriteCharactersAdapter {
 
     func wasFavorited(character: Character) -> Future<Bool, Error> {
         return checkIfCharacterWasFavoritedUseCase.run(character: character)
+    }
+
+    func allFavorites() -> Future<[Character], Error> {
+        return allFavoritesUseCase.run()
     }
 }

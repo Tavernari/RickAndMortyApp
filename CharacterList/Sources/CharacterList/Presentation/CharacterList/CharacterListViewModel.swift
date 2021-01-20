@@ -13,9 +13,14 @@ class CharacterListViewModel {
 
     enum State {
         case loading
-        case done
+        case itemsUpdated
         case failed
         case selected(character: Character)
+    }
+
+    enum Segment: Int {
+        case allCharacters = 0
+        case allFavorites = 1
     }
 
     struct ViewData {
@@ -23,8 +28,23 @@ class CharacterListViewModel {
         let imagePath: String
     }
 
+    private var allFavorites: [ViewData] = []
+    private var allCharacters: [ViewData] = []
+    var segment: Segment = .allCharacters {
+        didSet {
+            switch segment {
+            case .allCharacters:
+                items = allCharacters
+            case .allFavorites:
+                items = allFavorites
+            }
+
+            onUpdated?(.itemsUpdated)
+        }
+    }
     var items: [ViewData] = []
     var characters: [Character] = []
+    var favorites: [Character] = []
 
     var onUpdated: ((State)->Void)?
 
@@ -37,6 +57,8 @@ class CharacterListViewModel {
     init(fetchCaractersUseCase: FetchCharactersUseCase, favoriteCharactersAdapter: Shared.FavoriteCharactersAdapter) {
         self.fetchCaractersUseCase = fetchCaractersUseCase
         self.favoriteCharacter = favoriteCharactersAdapter
+
+        fetchFavorites()
     }
 
     func fetchCharacters() {
@@ -50,7 +72,7 @@ class CharacterListViewModel {
                 case .failure(let error):
                     guard error == .somethingWrong else {
                         self.isAllCharactersLoaded = true
-                        self.onUpdated?(.done)
+                        self.onUpdated?(.itemsUpdated)
                         return
                     }
 
@@ -59,29 +81,60 @@ class CharacterListViewModel {
                 }
         } receiveValue: { characters in
             self.characters.append(contentsOf: characters)
-            self.items.append(contentsOf: characters.map { ViewData(name: $0.name, imagePath: $0.avatar) })
-            self.onUpdated?(.done)
+            self.allCharacters.append(contentsOf: characters.map { ViewData(name: $0.name, imagePath: $0.avatar) })
+            self.updateItems()
+        }
+    }
+
+    private func updateItems() {
+        switch segment {
+        case .allCharacters:
+            items = allCharacters
+        case .allFavorites:
+            items = allFavorites
         }
 
+        self.onUpdated?(.itemsUpdated)
+    }
+
+    func fetchFavorites() {
+        _ = favoriteCharacter.allFavorites().sink { completion in
+            switch completion {
+            case .failure:
+                self.allFavorites = []
+            default: break
+            }
+        } receiveValue: { favorites in
+            self.favorites = favorites
+            self.allFavorites = favorites.map { ViewData(name: $0.name, imagePath: $0.avatar) }
+        }
     }
 
     func favorite(index: Int) {
-        let character = characters[index]
-        _ = favoriteCharacter.addToFavorites(character: character)
+        let character = segment == .allCharacters ? characters[index] : favorites[index]
+        _ = favoriteCharacter
+            .addToFavorites(character: character)
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in
+                self.fetchFavorites()
+            })
     }
 
     func unfavorite(index: Int)  {
-        let character = characters[index]
-        _ = favoriteCharacter.removeFromFavorites(character: character)
+        let character = segment == .allCharacters ? characters[index] : favorites[index]
+        _ = favoriteCharacter
+            .removeFromFavorites(character: character)
+            .sink(receiveCompletion: { _ in }, receiveValue: { _ in
+                self.fetchFavorites()
+            })
     }
 
     func wasFavorited(index: Int) -> Future<Bool, Error> {
-        let character = characters[index]
+        let character = segment == .allCharacters ? characters[index] : favorites[index]
         return favoriteCharacter.wasFavorited(character: character)
     }
 
     func select(index: Int) {
-        let character = characters[index]
+        let character = segment == .allCharacters ? characters[index] : favorites[index]
         onUpdated?(.selected(character: character))
     }
 }

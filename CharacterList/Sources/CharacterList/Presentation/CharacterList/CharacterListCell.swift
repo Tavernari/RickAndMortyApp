@@ -17,6 +17,9 @@ class CharacterListCell: UITableViewCell {
     override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
 
+        self.accessibilityIdentifier = "characterListCell"
+        self.isAccessibilityElement = true
+
         characterTitleAvatarView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(characterTitleAvatarView)
 

@@ -27,6 +27,8 @@ public class HeartButton: UIControl {
         let imageView = UIImageView(image: heartFilled)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.tintColor = .red
+        imageView.accessibilityIdentifier = "redHeart"
+        imageView.isAccessibilityElement = true
         return imageView
     }()
 

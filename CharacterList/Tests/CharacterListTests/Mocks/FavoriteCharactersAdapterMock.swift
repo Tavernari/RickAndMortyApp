@@ -15,6 +15,7 @@ class FavoriteCharactersAdapterMock: Shared.FavoriteCharactersAdapter {
     var wasFavoritedCallCount = 0
     var allFavoritesCount = 0
     var favoritedMock = false
+    var allFavoritesMock: [Character] = []
     func addToFavorites(character: Character) -> Future<Void, Error> {
         addToFavoritesCallCount += 1
         return .init { promise in
@@ -39,7 +40,7 @@ class FavoriteCharactersAdapterMock: Shared.FavoriteCharactersAdapter {
     func allFavorites() -> Future<[Character], Error> {
         allFavoritesCount += 1
         return .init { promise in
-            promise(.success([]))
+            promise(.success(self.allFavoritesMock))
         }
     }
 }

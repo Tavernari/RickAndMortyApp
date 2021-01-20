@@ -107,6 +107,7 @@ class CharacterListViewModel {
         } receiveValue: { favorites in
             self.favorites = favorites
             self.allFavorites = favorites.map { ViewData(name: $0.name, imagePath: $0.avatar) }
+            self.updateItems()
         }
     }
 

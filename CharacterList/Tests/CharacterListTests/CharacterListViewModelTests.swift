@@ -115,32 +115,27 @@ final class CharacterListViewModelTests: XCTestCase {
     }
 
     func testFavoriteFlowCharacters() {
-        let expectation = XCTestExpectation(description: "Waiting favorite flow")
+        viewModel.allCharacters = [.init(name: "test1", imagePath: ""), .init(name: "test2", imagePath: "")]
+        viewModel.characters = [.mock(id: 1), .mock(id: 2)]
 
-        repository.mockFetch(characters: [.mock(id: 1),
-                                          .mock(id: 2)])
-
-        viewModel.onUpdated = { [self] state in
-            switch state {
-            case .loading: break
-            case .itemsUpdated:
-                viewModel.favorite(index: 0)
-                viewModel.favorite(index: 1)
-                viewModel.unfavorite(index: 0)
-                _ = viewModel.wasFavorited(index: 0)
-                expectation.fulfill()
-                XCTAssertEqual(favoriteAdapter.addToFavoritesCallCount, 2)
-                XCTAssertEqual(favoriteAdapter.removeFromFavoritesCallCount, 1)
-                XCTAssertEqual(favoriteAdapter.wasFavoritedCallCount, 1)
-            default:
-                XCTFail()
-            }
-        }
-
-        viewModel.fetchCharacters()
-
-        wait(for: [expectation], timeout: 1)
+        viewModel.favorite(index: 0)
+        viewModel.favorite(index: 1)
+        viewModel.unfavorite(index: 0)
+        _ = viewModel.wasFavorited(index: 0)
+        XCTAssertEqual(favoriteAdapter.addToFavoritesCallCount, 2)
+        XCTAssertEqual(favoriteAdapter.removeFromFavoritesCallCount, 1)
+        XCTAssertEqual(favoriteAdapter.wasFavoritedCallCount, 1)
     }
 
+    func testFetchFavorites() {
+        favoriteAdapter.allFavoritesMock = [.mock(id: 10), .mock(id: 20)]
 
+        viewModel.segment = .allFavorites
+        viewModel.fetchFavorites()
+
+        XCTAssertFalse(viewModel.items.isEmpty)
+        XCTAssertEqual(viewModel.items.count, 2)
+        XCTAssertEqual(viewModel.favorites.first!.id, 10)
+        XCTAssertEqual(viewModel.favorites.last!.id, 20)
+    }
 }

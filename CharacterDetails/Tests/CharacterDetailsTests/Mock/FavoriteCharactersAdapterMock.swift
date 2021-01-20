@@ -2,7 +2,7 @@
 //  FavoriteCharactersAdapterMock.swift
 //  
 //
-//  Created by Victor C Tavernari on 19/01/21.
+//  Created by Victor C Tavernari on 20/01/21.
 //
 
 import Foundation

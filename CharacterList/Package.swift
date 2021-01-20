@@ -17,7 +17,9 @@ let package = Package(
         // .package(url: /* package url */, from: "1.0.0"),
         .package(path: "../Shared"),
         .package(path: "../RickAndMortyRestAPI"),
-        .package(path: "../FavoriteCharacters")
+        .package(path: "../FavoriteCharacters"),
+        .package(name: "SnapshotTesting", url: "https://github.com/pointfreeco/swift-snapshot-testing.git", from: "1.8.1"),
+
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -27,6 +29,6 @@ let package = Package(
             dependencies: ["Shared", "RickAndMortyRestAPI", "FavoriteCharacters"]),
         .testTarget(
             name: "CharacterListTests",
-            dependencies: ["CharacterList"]),
+            dependencies: ["CharacterList", "SnapshotTesting"]),
     ]
 )

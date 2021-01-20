@@ -10,31 +10,32 @@ import Combine
 import Shared
 @testable import CharacterList
 
-class CharacterListViewModelSpy: CharacterListViewModel {
+class CharacterListViewModelMock: CharacterListViewModel {
     var fetchCharactersCallCount = 0
     var selectCallCount = 0
     var favoriteCallCount = 0
     var unfavoriteCallCount = 0
     var wasFavoritedCallCount = 0
+    var favoritedMock = false
 
     override func fetchCharacters() {
         fetchCharactersCallCount += 1
-        super.fetchCharacters()
+        self.onUpdated?(.done)
     }
 
     override func unfavorite(index: Int) {
         unfavoriteCallCount += 1
-        super.unfavorite(index: index)
     }
 
     override func favorite(index: Int) {
         favoriteCallCount += 1
-        super.favorite(index: index)
     }
 
     override func wasFavorited(index: Int) -> Future<Bool, Error> {
         wasFavoritedCallCount += 1
-        return super.wasFavorited(index: index)
+        return .init { promise in
+            promise(.success(self.favoritedMock))
+        }
     }
 
     override func select(index: Int) {

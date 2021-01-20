@@ -28,7 +28,6 @@ public class HeartButton: UIControl {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.tintColor = .red
         imageView.accessibilityIdentifier = "redHeart"
-        imageView.isAccessibilityElement = true
         return imageView
     }()
 
@@ -40,6 +39,10 @@ public class HeartButton: UIControl {
 
     public override func willMove(toSuperview newSuperview: UIView?) {
         super.willMove(toSuperview: newSuperview)
+
+        isAccessibilityElement = true
+        accessibilityIdentifier = "heartButton"
+        accessibilityTraits = .button
 
         addSubview(whiteHeart)
         addSubview(redHeart)

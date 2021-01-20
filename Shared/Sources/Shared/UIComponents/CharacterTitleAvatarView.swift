@@ -18,10 +18,6 @@ public class CharacterTitleAvatarView: UIView {
 
     private lazy var favoriteButton: HeartButton = {
         let button = HeartButton()
-        button.accessibilityIdentifier = "favorite"
-        button.accessibilityLabel = "Favorite Button"
-        button.accessibilityTraits = .button
-        button.isAccessibilityElement = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.shadowColor = UIColor.black.cgColor
         button.layer.shadowOffset = .init(width: 0, height: 5)
@@ -101,7 +97,7 @@ public class CharacterTitleAvatarView: UIView {
 
         accessibilityIdentifier = "characterTitleAvatarView"
         accessibilityLabel = "Character Title Avatar View"
-        isAccessibilityElement = true
+        isAccessibilityElement = false
 
         characterImageView.backgroundColor = .gray
 

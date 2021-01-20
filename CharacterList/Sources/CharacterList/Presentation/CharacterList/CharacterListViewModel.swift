@@ -24,7 +24,7 @@ class CharacterListViewModel {
     }
 
     var items: [ViewData] = []
-    private var characters: [Character] = []
+    var characters: [Character] = []
 
     var onUpdated: ((State)->Void)?
 

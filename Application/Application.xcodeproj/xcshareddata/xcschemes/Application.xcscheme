@@ -79,26 +79,6 @@
                ReferencedContainer = "container:../FavoriteCharacters">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "RickAndMortyRestAPITests"
-               BuildableName = "RickAndMortyRestAPITests"
-               BlueprintName = "RickAndMortyRestAPITests"
-               ReferencedContainer = "container:../RickAndMortyRestAPI">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SharedTests"
-               BuildableName = "SharedTests"
-               BlueprintName = "SharedTests"
-               ReferencedContainer = "container:../Shared">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

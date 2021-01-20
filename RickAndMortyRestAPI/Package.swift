@@ -22,8 +22,5 @@ let package = Package(
         .target(
             name: "RickAndMortyRestAPI",
             dependencies: []),
-        .testTarget(
-            name: "RickAndMortyRestAPITests",
-            dependencies: ["RickAndMortyRestAPI"]),
     ]
 )

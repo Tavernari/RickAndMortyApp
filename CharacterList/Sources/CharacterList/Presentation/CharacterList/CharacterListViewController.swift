@@ -28,6 +28,8 @@ class CharacterListViewController: UIViewController {
     private let allCharactersSegmentIndex = 0
     private let allFavoritesSegmentIndex = 1
 
+    var withAnimation = true
+
     weak var delegate: CharacterListViewControllerDelegate?
 
     lazy var emptyListLabel: UILabel = {
@@ -101,11 +103,13 @@ class CharacterListViewController: UIViewController {
     }
 
     private func showErrorAlert() {
-        let alert = UIAlertController(title: "Something wrong", message: "Check your internet connection, or try again later!", preferredStyle: .alert)
-        alert.addAction(.init(title: "Retry", style: .default, handler: { action in
-            alert.dismiss(animated: true, completion: self.viewModel.fetchCharacters)
-        }))
-        self.present(alert, animated: true)
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Something wrong", message: "Check your internet connection, or try again later!", preferredStyle: .alert)
+            alert.addAction(.init(title: "Retry", style: .default, handler: { action in
+                alert.dismiss(animated: self.withAnimation, completion: self.viewModel.fetchCharacters)
+            }))
+            self.present(alert, animated: self.withAnimation)
+        }
     }
 
     private func applyConstraints() {
@@ -155,22 +159,34 @@ class CharacterListViewController: UIViewController {
             .isActive = true
     }
 
+    func setToFailedState() {
+        self.hideLoadingView()
+        self.showErrorAlert()
+        self.emptyListLabel.isHidden = true
+    }
+
+    func setToLoadingState() {
+        self.showLoadingView()
+        self.emptyListLabel.isHidden = true
+    }
+
+    func setToItemsUpdatedState() {
+        self.hideLoadingView()
+        self.dataSource.models = self.viewModel.items
+        self.emptyListLabel.isHidden = !self.viewModel.items.isEmpty
+        self.tableView.reloadData()
+    }
+
     private func binViewModelUpdate() {
         viewModel.onUpdated = { [weak self] state in
             guard let self = self else { return }
             switch state {
             case .loading:
-                self.showLoadingView()
-                self.emptyListLabel.isHidden = true
+                self.setToLoadingState()
             case .failed:
-                self.hideLoadingView()
-                self.showErrorAlert()
-                self.emptyListLabel.isHidden = true
+                self.setToFailedState()
             case .itemsUpdated:
-                self.hideLoadingView()
-                self.dataSource.models = self.viewModel.items
-                self.emptyListLabel.isHidden = !self.viewModel.items.isEmpty
-                self.tableView.reloadData()
+                self.setToItemsUpdatedState()
             case .selected(let character):
                 self.delegate?.selected(from: self, character: character)
             }

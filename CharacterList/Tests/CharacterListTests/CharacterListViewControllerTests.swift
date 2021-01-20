@@ -23,12 +23,10 @@ final class CharacterListViewControllerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
+        viewController.viewModel = viewModel
     }
 
     private func lifeCycle() {
-        viewController.viewModel = viewModel
-        viewController.view.frame = UIScreen.main.bounds
-
         viewController.viewDidLoad()
         viewController.viewWillAppear(true)
         viewController.viewDidAppear(true)
@@ -42,8 +40,6 @@ final class CharacterListViewControllerTests: XCTestCase {
         viewModel.characters = [.mock(id: 1), .mock(id: 2)]
         viewModel.segment = .allCharacters
 
-        lifeCycle()
-        
         assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
 
@@ -57,8 +53,20 @@ final class CharacterListViewControllerTests: XCTestCase {
                                 .mock(id: 2),
                                 .mock(id: 3)]
         viewModel.segment = .allCharacters
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
+    }
 
-        lifeCycle()
+    func testSegmentFavoritesCharacters_onIPhoneX() {
+        viewModel.favoritedMock = true
+        viewModel.allFavorites = [
+            .init(name: "Favorite Test", imagePath: ""),
+            .init(name: "Favorite Test 2", imagePath: ""),
+            .init(name: "Favorite Test 3", imagePath: "")]
+        viewModel.favorites = [.mock(id: 1),
+                                .mock(id: 2),
+                                .mock(id: 3)]
+        viewController.segmentControl.selectedSegmentIndex = 1
+        viewController.segmentChanged()
 
         assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }

@@ -16,10 +16,16 @@ class CharacterListViewModelMock: CharacterListViewModel {
     var favoriteCallCount = 0
     var unfavoriteCallCount = 0
     var wasFavoritedCallCount = 0
+    var fetchFavoritesCallCount = 0
     var favoritedMock = false
 
     override func fetchCharacters() {
         fetchCharactersCallCount += 1
+        self.onUpdated?(.itemsUpdated)
+    }
+
+    override func fetchFavorites() {
+        fetchFavoritesCallCount += 1
         self.onUpdated?(.itemsUpdated)
     }
 

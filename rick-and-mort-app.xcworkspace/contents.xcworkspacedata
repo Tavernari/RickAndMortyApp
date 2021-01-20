@@ -17,6 +17,6 @@
       location = "group:FavoriteCharacters">
    </FileRef>
    <FileRef
-      location = "group:App/App.xcodeproj">
+      location = "group:Application/Application.xcodeproj">
    </FileRef>
 </Workspace>

@@ -11,7 +11,7 @@ Clone this repository and open using XCode 12 or above.
 ## Running tests
 
 You can use xcode with Application Scheme or each module separately. 
-If you prefer you also can run using fastlane using `fastlane test`
+If you prefer you also can run it using fastlane with the command `fastlane test`
 
 ## App Scheme
 

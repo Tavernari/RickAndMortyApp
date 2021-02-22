@@ -1,6 +1,6 @@
 #  Rick and Morty App Example
 
-This project target is make an example with a modular structure using Swift Package Manager as dependency manager
+This project target is about making an example with a modular structure using Swift Package Manager as a dependency manager
 
 ![Example](./PlanningFiles/example_application.gif)
 
